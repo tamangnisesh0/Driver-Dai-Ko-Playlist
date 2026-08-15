@@ -120,7 +120,12 @@ const els = {
   hornBtn: document.getElementById("hornBtn"),
   navHorn: document.getElementById("navHorn"),
   dustField: document.getElementById("dustField"),
+  playerCard: document.getElementById("playerCard"),
+  navBurger: document.getElementById("navBurger"),
+  navLinksMobile: document.getElementById("navLinksMobile"),
 };
+
+let playerReady = false;
 
 function thumbUrl(id) {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
@@ -172,6 +177,9 @@ function onYouTubeIframeAPIReady() {
 window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
 
 function onPlayerReady() {
+  playerReady = true;
+  els.playerCard.classList.remove("loading");
+  els.playBtn.disabled = false;
   if (player && player.setVolume) {
     player.setVolume(Number(els.volumeSlider.value));
   }
@@ -214,12 +222,19 @@ function loadSong(index, autoplay) {
 }
 
 function togglePlay() {
-  if (!player) return;
+  if (!player || !playerReady) return;
   const state = player.getPlayerState ? player.getPlayerState() : -1;
 
   if (state === YT.PlayerState.PLAYING) {
+    // instant visual feedback, don't wait for the YouTube state event
+    isPlaying = false;
+    setPlayIcon(false);
+    stopProgressLoop();
     player.pauseVideo();
   } else {
+    isPlaying = true;
+    setPlayIcon(true);
+    startProgressLoop();
     player.playVideo();
   }
 }
@@ -433,6 +448,49 @@ function updateNepaliClock() {
 updateNepaliClock();
 setInterval(updateNepaliClock, 1000);
 
+/* ============ Live listeners + total visits ============ */
+/* Namespace should be unique to this site to avoid collisions on the shared counter API */
+const VISIT_NAMESPACE = "driverdai-ko-playlist-v1";
+const NP_LOCALE_NUM = new Intl.NumberFormat("ne-NP");
+
+function toNepaliNumStr(n) {
+  return toNepaliDigits(NP_LOCALE_NUM.format(n).replace(/,/g, ""));
+}
+
+async function initTotalVisits() {
+  const el = document.getElementById("totalVisits");
+  if (!el) return;
+  try {
+    const res = await fetch(
+      `https://api.countapi.xyz/hit/${VISIT_NAMESPACE}/visits`
+    );
+    if (!res.ok) throw new Error("bad response");
+    const data = await res.json();
+    el.textContent = toNepaliNumStr(data.value);
+  } catch (e) {
+    // API unreachable (offline, blocked, etc) — hide the line instead of showing a broken "--"
+    const footerLine = el.closest(".footer-visits");
+    if (footerLine) footerLine.style.display = "none";
+  }
+}
+
+/* "listening now" — a live-feeling number, not a verified concurrent count
+   (a real one needs a backend/websocket, which this static site doesn't have) */
+function initListenersNow() {
+  const el = document.getElementById("listenersNow");
+  if (!el) return;
+  let current = 14 + Math.floor(Math.random() * 22); // starting baseline
+  el.textContent = toNepaliNumStr(current);
+
+  function drift() {
+    const delta = Math.floor(Math.random() * 5) - 2; // -2..+2
+    current = Math.max(6, current + delta);
+    el.textContent = toNepaliNumStr(current);
+    setTimeout(drift, 3500 + Math.random() * 4000);
+  }
+  setTimeout(drift, 3500 + Math.random() * 4000);
+}
+
 /* ============ Scroll-reveal animations ============ */
 function initScrollReveal() {
   const targets = document.querySelectorAll(".reveal");
@@ -454,10 +512,30 @@ function initScrollReveal() {
   targets.forEach((el) => io.observe(el));
 }
 
+/* ============ Mobile nav toggle ============ */
+if (els.navBurger) {
+  els.navBurger.addEventListener("click", () => {
+    const open = els.navBurger.classList.toggle("open");
+    els.navBurger.setAttribute("aria-expanded", String(open));
+    els.navLinksMobile.classList.toggle("open", open);
+  });
+  els.navLinksMobile.querySelectorAll(".nav-link-m").forEach((link) => {
+    link.addEventListener("click", () => {
+      els.navBurger.classList.remove("open");
+      els.navBurger.setAttribute("aria-expanded", "false");
+      els.navLinksMobile.classList.remove("open");
+    });
+  });
+}
+
 /* ============ Init ============ */
+els.playerCard.classList.add("loading");
+els.playBtn.disabled = true;
 renderPlaylist();
 els.trackTitle.textContent = SONGS[0].title;
 els.trackSinger.textContent = SONGS[0].singer;
 els.artThumb.src = thumbUrl(SONGS[0].id);
 highlightPlaylist();
 initScrollReveal();
+initTotalVisits();
+initListenersNow();

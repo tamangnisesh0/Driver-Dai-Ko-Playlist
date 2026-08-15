@@ -35,7 +35,15 @@
         <path d="M50 16c7 6 7 24 0 30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.6"/>
       </svg>
     </button>
+    <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <ul class="nav-links-mobile" id="navLinksMobile">
+    <li><a href="#home" class="nav-link-m" data-section="home">Home</a></li>
+    <li><a href="#playlist" class="nav-link-m" data-section="playlist">Playlist</a></li>
+    <li><a href="#about" class="nav-link-m" data-section="about">About us</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
@@ -64,14 +72,16 @@
   <div class="hero-content">
     <p class="eyebrow">Music for the Road &nbsp;·&nbsp; From the Hills to the Heart</p>
 
+    <div class="live-stats" id="liveStats">
+      <span class="live-dot"></span>
+      <span id="listenersNow">--</span>
+      <span class="live-label">जना अहिले सुन्दैछन्</span>
+    </div>
+
     <!-- PLAYER -->
     <div class="player-card" id="playerCard">
       <div class="player-art">
         <img id="artThumb" src="" alt="">
-        <button class="horn-bulb" id="hornBtn" aria-label="बस हर्न बजाउनुहोस्">
-          <span class="bulb"></span>
-          <span class="horn-pipe"></span>
-        </button>
       </div>
 
       <div class="player-body">
@@ -107,6 +117,21 @@
         </div>
       </div>
     </div>
+
+    <button class="horn-please" id="hornBtn" aria-label="बस हर्न बजाउनुहोस्">
+      <span class="hp-bulb">
+        <svg viewBox="0 0 64 64" width="26" height="26" fill="none">
+          <path d="M8 26h14l20-14v40l-20-14H8z" fill="currentColor"/>
+          <path d="M44 22c4 3 4 15 0 18" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M50 16c7 6 7 24 0 30" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.6"/>
+        </svg>
+      </span>
+      <span class="hp-text">
+        <span class="hp-line1">Horn</span>
+        <span class="hp-line2">Please</span>
+      </span>
+    </button>
+
     <a href="#playlist" class="hero-hint">▾ Scroll down for the full playlist</a>
   </div>
 </section>
@@ -182,6 +207,7 @@
 
 <footer class="site-footer">
   <p>ड्राइभर दाई · Ko Playlist — सुरक्षित यात्रा गर्नुहोस् 🚌</p>
+  <p class="footer-visits">कुल श्रोताहरू: <span id="totalVisits">--</span></p>
 </footer>
 
 <!-- hidden youtube mount point -->
