@@ -117,8 +117,6 @@ const els = {
   playlistEl: document.getElementById("playlistEl"),
   navbar: document.getElementById("navbar"),
   navLinks: document.querySelectorAll(".nav-link"),
-  hornBtn: document.getElementById("hornBtn"),
-  navHorn: document.getElementById("navHorn"),
   dustField: document.getElementById("dustField"),
   playerCard: document.getElementById("playerCard"),
   navBurger: document.getElementById("navBurger"),
@@ -305,73 +303,6 @@ els.volumeSlider.addEventListener("input", () => {
 els.playBtn.addEventListener("click", togglePlay);
 els.nextBtn.addEventListener("click", playNext);
 els.prevBtn.addEventListener("click", playPrev);
-
-/* ============ Nepali bus horn (Web Audio synth) ============ */
-let audioCtx = null;
-function getCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === "suspended") {
-    audioCtx.resume();
-  }
-  return audioCtx;
-}
-
-function honkOnce(startDelay = 0) {
-  const ctx = getCtx();
-  const t0 = ctx.currentTime + startDelay;
-  const dur = 0.42;
-
-  const master = ctx.createGain();
-  master.connect(ctx.destination);
-
-  master.gain.setValueAtTime(0.0001, t0);
-  master.gain.exponentialRampToValueAtTime(0.9, t0 + 0.035);
-  master.gain.setValueAtTime(0.9, t0 + dur - 0.14);
-  master.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
-
-  const freqs = [330, 415, 247];
-  freqs.forEach((f, i) => {
-    const osc = ctx.createOscillator();
-    osc.type = i === 2 ? "sawtooth" : "square";
-    osc.frequency.setValueAtTime(f * 0.9, t0);
-    osc.frequency.linearRampToValueAtTime(f, t0 + 0.04);
-
-    const g = ctx.createGain();
-    g.gain.value = i === 0 ? 0.55 : i === 1 ? 0.35 : 0.25;
-
-    const filter = ctx.createBiquadFilter();
-    filter.type = "bandpass";
-    filter.frequency.value = f * 1.5;
-    filter.Q.value = 3;
-
-    osc.connect(filter);
-    filter.connect(g);
-    g.connect(master);
-
-    osc.start(t0);
-    osc.stop(t0 + dur + 0.02);
-  });
-}
-
-function playNepaliHorn() {
-  honkOnce(0);
-  honkOnce(0.52);
-}
-
-function triggerHornVisual(btn) {
-  btn.classList.add("honking");
-  setTimeout(() => btn.classList.remove("honking"), 380);
-}
-
-els.hornBtn.addEventListener("click", () => {
-  playNepaliHorn();
-  triggerHornVisual(els.hornBtn);
-});
-els.navHorn.addEventListener("click", () => {
-  playNepaliHorn();
-  els.navHorn.style.transform = "scale(0.85) rotate(-6deg)";
-  setTimeout(() => (els.navHorn.style.transform = ""), 200);
-});
 
 /* ============ Navbar scroll state + active link ============ */
 const sections = ["home", "playlist", "about"].map((id) => document.getElementById(id));
