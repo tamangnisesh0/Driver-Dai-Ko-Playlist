@@ -1,6 +1,97 @@
 /* ============ Playlist data ============ */
 const SONGS = [
   {
+  id: "HtWte-k3Yyc",
+  title: "सुन्छु तिमीले मलाई भुल्न आँटेको छाउरे",
+  singer: "शिव परियार",
+  suggest: "मित ज्यु",
+},
+{
+  id: "9PfKOqWzNrk",
+  title: "चिठ्ठी तिमीलाई लेखु भन्छु",
+  singer: "शम्भु राई",
+},
+{
+  id: "NtlyKk3xrAg",
+  title: "एउटा मान्छेको मायाले कति",
+  singer: "नारायण गोपाल",
+},
+{
+  id: "FvGqeHYN3HA",
+  title: "गाजलु ति ठुला ठुला आँखा",
+  singer: "गुलाम अली",
+},
+{
+  id: "E2A5YLSPliM",
+  title: "हेर न हेर कान्छा",
+  singer: "अरुणा लामा र जितेन्द्र बर्देवा",
+},
+{
+  id: "UOCNEwoJtS0",
+  title: "यो नानीको सिरैमा",
+  singer: "बिधान श्रेष्ठ र आहाना बस्नेत",
+},
+{
+  id: "sY-2ABfH1bI",
+  title: "किन किन तिम्रो तस्बिर",
+  singer: "गुलाम अली",
+},
+{
+  id: "7pOVG4o7914",
+  title: "ए कान्छा मलाई सुनको तारा",
+  singer: "अरुणा लामा र रुद्र मणि गुरुङ",
+},
+{
+  id: "CAv5Ii8V5AU",
+  title: "यो सम्झिने मन छ",
+  singer: "नारायण गोपाल",
+},
+{
+  id: "0qINEfgn3Dg",
+  title: "असारै महिनामा",
+  singer: "प्रशान्त तामाङ",
+},
+{
+  id: "LnOajzcjBz4",
+  title: "Dashain Tihar",
+  singer: "सुगम पोखरेल",
+},
+{
+  id: "Pkj6YFJFI8U",
+  title: "मलाई नसोध",
+  singer: "नारायण गोपाल",
+},
+{
+  id: "xxFyLeAfS2A",
+  title: "तिमीले त होइन",
+  singer: "बच्चु कैलाश",
+},
+{
+  id: "ig8NsBcpXVU",
+  title: "सिरीमा सिरी नि कान्छा",
+  singer: "नारायण गोपाल र ज्ञानु राणा",
+},
+{
+  id: "d-sqC1ggrH0",
+  title: "रातो रानी फुलेझै साँझमा",
+  singer: "डेनी डेन्जोंगपा",
+},
+{
+  id: "bu4srv0FPM8",
+  title: "बतासले उदाई ल्यायो",
+  singer: "कुमार कान्छा र आशा भोंसले",
+},
+{
+  id: "YKvONdP4Fr4",
+  title: "मायाको बारीमा",
+  singer: "उदित नारायण र दीपा झा",
+},
+{
+  id: "LFR4eMQzUr4",
+  title: "केही मिठो बात गर",
+  singer: "नारायण गोपाल",
+},
+  {
     id: "zhqbroT7mV0",
     title: "लठ्ठी चाल नगर मेरो मायामा",
     singer: "रामचन्द्र काफ्ले र सिन्धु मल्ल",
@@ -79,11 +170,6 @@ const SONGS = [
     id: "TBOs5ojqa_s",
     title: "पूर्बै रमाइलो",
     singer: "गौरव दर्पण, सृष्टि हिङमाङ",
-  },
-  {
-    id: "zhqbroT7mV0",
-    title: "लठ्ठी चाल नगर मेरो मायामा",
-    singer: "रामचन्द्र काफ्ले र सिन्धु मल्ल",
   },
   {
     id: "l0L7v9uMLZo",
