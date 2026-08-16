@@ -1,10 +1,9 @@
 /* ============ Playlist data ============ */
 const SONGS = [
   {
-  id: "HtWte-k3Yyc",
-  title: "सुन्छु तिमीले मलाई भुल्न आँटेको छाउरे",
+  id: "NkqWnxsAFDc",
+  title: "सुन्छु तिमीले मलाई भुल्न आँटेको छाउरे | मित ज्यु",
   singer: "शिव परियार",
-  suggest: "मित ज्यु",
 },
 {
   id: "9PfKOqWzNrk",
